@@ -24,10 +24,8 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-public/build
 stats.html
 public/backend/uploads
-public/build
 tests/database/app.sql
 tests/database/testing.sql
 /candidate
