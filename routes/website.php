@@ -23,6 +23,10 @@ use Illuminate\Support\Facades\Route;
 // =====================================================================
 // =============================Authentication Routes===================
 // ======================================================================
+Route::get('/submit-application', [RegisterController::class, 'showQuickApplyForm'])->name('show.application');
+Route::post('/submit-application', [RegisterController::class, 'submitQuickApplyForm'])->name('submit.application');
+Route::post('/check-email', [RegisterController::class, 'checkEmail'])->name('check.email');
+
 if (! app()->runningInConsole()) {
     Auth::routes(['verify' => setting('email_verification')]);
 } else {
@@ -257,3 +261,5 @@ Route::controller(PayPalController::class)->group(function () {
     Route::get('success-transaction', 'successTransaction')->name('paypal.successTransaction');
     Route::get('cancel-transaction', 'cancelTransaction')->name('paypal.cancelTransaction');
 });
+
+

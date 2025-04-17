@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Schema::table('cities', function (Blueprint $table) {
-        //     $table->timestamps();
-        // });
+        Schema::create('candidate_licenses', function (Blueprint $table) {
+            $table->id();
+            $table->string('license_status');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -21,8 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('cities', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('candidate_licenses');
     }
 };

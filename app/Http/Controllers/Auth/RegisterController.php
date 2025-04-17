@@ -2,24 +2,43 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Http\Traits\HasCountryBasedJobs;
-use App\Models\Candidate;
-use App\Models\Setting;
+use App\Models\Job;
 use App\Models\User;
-use App\Notifications\CandidateCreateApprovalPendingNotification;
-use App\Notifications\CandidateCreateNotification;
-use App\Notifications\CompanyCreateApprovalPendingNotification;
-use App\Notifications\CompanyCreatedNotification;
-use App\Notifications\EmailVerifyNotification;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Models\Skill;
+use App\Models\JobType;
+use App\Models\Setting;
+use App\Models\Candidate;
+use App\Models\Education;
+use App\Models\Experience;
+use App\Models\Profession;
+use App\Models\ContactInfo;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Models\CandidateVisa;
+use Illuminate\Support\Carbon;
+use App\Models\CandidateResume;
+use App\Models\CandidateLicense;
+use App\Models\SkillTranslation;
+use App\Models\CandidateLanguage;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Models\CandidateNationality;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Log;
+use App\Models\ProfessionTranslation;
+use App\Providers\RouteServiceProvider;
+use Modules\Language\Entities\Language;
+use App\Http\Traits\HasCountryBasedJobs;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\EmailVerifyNotification;
+use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Notifications\CompanyCreatedNotification;
+use App\Notifications\CandidateCreateNotification;
+use App\Notifications\CompanyCreateApprovalPendingNotification;
+use App\Notifications\CandidateCreateApprovalPendingNotification;
 
 class RegisterController extends Controller
 {
@@ -167,4 +186,260 @@ class RegisterController extends Controller
 
         return view('frontend.auth.verify');
     }
+
+    public function showQuickApplyForm()
+    {
+    $setting = Setting::first();
+    $nationalities = CandidateNationality::all();
+    $visastatuses = CandidateVisa::all();
+    $licensestatuses = CandidateLicense::all();
+    $professions = Profession::all();
+    $jobtypes = JobType::all();
+    $skills = Skill::all();
+    $languages = CandidateLanguage::all(['id', 'name']);
+    $experiences = Experience::all();
+    $educations = Education::all();
+    
+     $data = [
+     'setting' => $setting,
+     'nationalities' => $nationalities,
+     'licensestatuses' => $licensestatuses,
+     'visastatuses' => $visastatuses,
+     'skills' => $skills,
+     'experiences' => $experiences,
+     'educations' => $educations,
+     'candidate_languages' => $languages,
+     'professions' => $professions,
+     'jobtypes' => $jobtypes,
+     'newjobs' => $this->filterCountryBasedJobs(Job::withoutEdited()->newJobs())->count(),
+      ];
+      // resources/views/frontend/auth/quickapply.blade.php
+     return view('frontend.auth.quickapply', $data);
+    }
+
+    public function checkEmail(Request $request)
+    {
+        $email = $request->input('email');
+        $user = User::where('email', $email)->first();
+    
+        if ($user) {
+            return response()->json([
+                'exists' => true
+            ]);
+        } else {
+            return response()->json([
+                'exists' => false
+            ]);
+        }
+    }
+
+    public function submitQuickApplyForm(Request $request)
+    {
+        \Log::info('Submitted status value: ' . $request->status);
+
+        // $request->validate([
+        //     'status' => 'required|in:available,not_available,available_in',
+        // ]);
+
+        $newUsername = Str::slug($request['name']);
+
+        $oldUserName = User::where('username', $newUsername)->first();
+
+        if ($oldUserName) {
+            $username = Str::slug($newUsername) . '_' . Str::random(5);
+        } else {
+            $username = Str::slug($newUsername);
+        }
+
+        $user = User::create([
+            'role' => 'candidate',
+            'name' => $request['name'],
+            'username' => $username,
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+        ]);
+
+        $experience_request = $request->experience;
+        $experience = Experience::where('id', $experience_request)->first();
+
+        if (!$experience) {
+            $experience = Experience::create(['name' => $experience_request]);
+        }
+
+        // Education
+        $education_request = $request->education;
+        $education = Education::where('id', $education_request)->first();
+
+        if (!$education) {
+            $education = Education::create(['name' => $education_request]);
+        }
+
+        $dateTime = Carbon::parse($request->birth_date);
+        $date = $request['birth_date'] = $dateTime->format('Y-m-d H:i:s');
+
+        if ($request->status == 'available_in') {
+            $request->validate([
+                'available_in' =>  'required'
+            ]);
+        }
+
+        // Profession
+        $profession_request = $request->profession;
+        $profession = ProfessionTranslation::where('profession_id', $profession_request)->orWhere('name', $profession_request)->first();
+
+        if (!$profession) {
+            $new_profession = Profession::create(['name' => $profession_request]);
+
+            $languages = Language::all();
+            foreach ($languages as $language) {
+                $new_profession->translateOrNew($language->code)->name = $profession_request;
+            }
+            $new_profession->save();
+
+            $profession_id = $new_profession->id;
+        } else {
+            $profession_id = $profession->profession_id;
+        }
+
+        $candidate = $user->candidate;
+
+        $candidate->update([
+            'experience_id' => $experience->id,
+            'noc_available' => $request->noc_available,
+            'education_id' => $education->id,
+            'birth_date' => $date,
+            'gender' => $request->gender,
+            'marital_status' => $request->marital_status,
+            'profession_id' => $profession_id,
+            'status' => $request->status,
+            'nationality_id' => $request->nationality,
+            'candidate_visa_status_id' => $request->visastatus,
+            'candidate_license_status_id' => $request->licensestatus,
+            'profile_complete' => "0",
+            'country' => $request->current_country,
+            'address' => $request->current_region . ', ' . $request->current_country,
+            'region' => $request->current_region,
+            'locality' => "",
+            'long' =>  $request->current_location_lng,
+            'lat' => $request->current_location_lat,
+            'current_salary' => $request->current_salary,
+            'expected_salary' => $request->expected_salary,
+            'available_in' => $request->available_in ? Carbon::parse($request->available_in)->format('Y-m-d') : null,
+        ]);
+
+        $jobTypeIds = $request->jobs_types; // corrected variable name
+        $selectedJobTypes = [];
+        if ($jobTypeIds) {
+            $selectedJobTypes = JobType::whereIn('id', $jobTypeIds)->get();
+            $candidate->jobTypes()->sync(collect($selectedJobTypes)->pluck('id')->toArray());
+        }
+
+        $skills = $request->skills;
+        if ($skills) {
+            $skillsArray = [];
+            $count = 0; // Counter to keep track of the number of skills added
+
+            foreach ($skills as $skill) {
+                if ($count >= 5) {
+                    break; // Stop synchronizing skills if the limit is reached
+                }
+
+                $skillExists = SkillTranslation::where('skill_id', $skill)->orWhere('name', $skill)->first();
+
+                if (!$skillExists) {
+                    $newSkill = Skill::create(['name' => $skill]);
+
+                    $languages = Language::all();
+                    foreach ($languages as $language) {
+                        $newSkill->translateOrNew($language->code)->name = $skill;
+                    }
+                    $newSkill->save();
+
+                    array_push($skillsArray, $newSkill->id);
+                    $count++; // Increment the counter
+                } else {
+                    array_push($skillsArray, $skillExists->skill_id);
+                    $count++; // Increment the counter
+                }
+            }
+
+            $candidate->skills()->sync($skillsArray);
+        }
+
+        $candidate->languages()->sync($request->languages);
+
+        $contact = ContactInfo::where('user_id', $user->id)->first();
+
+        if (empty($contact)) {
+            $phonenumber = $request->prefixphone;
+
+            ContactInfo::create([
+                'user_id' => $user->id,
+                'phone' => $phonenumber,
+                'email' => $request->email,
+            ]);
+        } else {
+            $phonenumber = $request->prefixphone;
+            $email = $request->email;
+            $contact->update([
+                'phone' => $phonenumber,
+                'email' => $email,
+            ]);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'file_upload' => 'required|mimes:pdf,jpg,jpeg,doc,docx|max:5120',
+        ]);
+
+        if ($validator->fails()) {
+            $user->delete();
+
+            return redirect()->back()->with('error', 'Please check your resume file format or size.')->withInput();
+        }
+
+        $data['name'] = $user->username;
+        $data['candidate_id'] = $candidate->id;
+
+        // cv
+        if ($request->file_upload) {
+            $pdfPath = "file/candidates/";
+            $file = uploadFileToPublic($request->file_upload, $pdfPath);
+            $data['file'] = $file;
+        }
+
+        // try {
+            $resume = CandidateResume::create($data);
+
+            // Get the ID of the last saved resume
+            $resumeId = $resume->id;
+
+            // Update the candidate's default_cv field with the resume ID
+            $candidate->update(['default_cv' => $resumeId,]); 
+
+            // if mail configured, send notification to candidate and company
+            if (checkMailConfig()) {
+                if ($user->role == "candidate") {
+                    $candidate_account_auto_activation_enabled = Setting::where("candidate_account_auto_activation", 1)->count();
+
+                    if ($candidate_account_auto_activation_enabled) {
+                        Notification::route('mail', $user->email)->notify(new CandidateCreateNotification($user, $request->password));
+                    } else {
+                        Notification::route('mail', $user->email)->notify(new CandidateCreateApprovalPendingNotification($user, $request->password));
+                    }
+                }
+            }
+        // } catch (\Illuminate\Database\QueryException $e) {
+        //     $errorCode = $e->errorInfo[1];
+        //     if ($errorCode == 1364) {
+        //         return redirect()->back()->with('error', 'File field is required.');
+        //     }
+
+        //     return redirect()->back()->with('error', 'Something went wrong. Please try again.');
+        // }
+
+        Auth::login($user);
+
+        return redirect()->route('website.home')->with('success', 'Your application has been submitted successfully!')->with('user', $user);
+    }
+    
 }

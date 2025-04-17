@@ -714,9 +714,9 @@ config('templatecookie.default_language'))->first();
                                 @company
                                 <li class="tw-hidden sm:tw-block">
 
-                                    <a href="{{ route('company.job.create') }}">
+                                    <a href="{{ route('show.application') }}">
                                         <button class="btn btn-light">
-                                            {{ __('post_job') }}
+                                            {{ __('quick_apply') }}
                                         </button>
                                     </a>
                                 </li>
@@ -743,7 +743,7 @@ config('templatecookie.default_language'))->first();
                                     <a href="{{ route('login') }}" class="btn btn-outline-light">{{ __('sign_in') }}</a>
                                 </li>
                                 <li class="d-none d-sm-block">
-                                    <a href="{{ route('company.job.create') }}" class="btn btn-light">{{ __('post_job')
+                                    <a href="{{ route('show.application') }}#headerCTA" class="btn btn-light">{{ __('quick_apply')
                                         }}
                                     </a>
                                 </li>

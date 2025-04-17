@@ -80,7 +80,7 @@
 </head>
 
 <body class="" dir="{{ langDirection() }}">
-    <header class="site-header rt-fixed-top auth-header r-z">
+    <header class=" ">
         <div class="main-header">
             <div class="navbar">
                 <div class="container container-full-xxl">

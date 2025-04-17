@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Schema::table('cities', function (Blueprint $table) {
-        //     $table->timestamps();
-        // });
+        Schema::create('candidate_job_types', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('candidate_id')->constrained('candidates');
+            $table->foreignId('job_type_id')->constrained('job_types');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -21,8 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('cities', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('candidate_job_types');
     }
 };

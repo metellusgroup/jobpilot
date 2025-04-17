@@ -280,4 +280,8 @@ class Candidate extends Model
         return $this->hasMany(CandidateResume::class);
 
     }
+    public function jobTypes()
+    {
+        return $this->belongsToMany(JobType::class, 'candidate_job_types');
+    }
 }

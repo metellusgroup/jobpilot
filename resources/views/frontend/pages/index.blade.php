@@ -28,7 +28,7 @@
                                 <h1 class="text-gray-900 rt-mb-24">
                                     {{ __('discover_your_perfect_job_matching_your_interests_and_skills') }}
                                 </h1>
-                                <div class="f-size-18 text-gray-600 rt-mb-30">
+                                <div class="f-size-18 text-gray-600 rt-mb-30 text-primary-500 has-title-shape">
                                     {{ __('unlock_your_potential_embrace_your_future') }}
                                 </div>
                             </div>
@@ -38,7 +38,7 @@
                                     <div class="flex-grow-1 fromGroup has-icon">
                                         <input id="index_search" name="keyword" type="text"
                                             placeholder="{{ __('job_title_keyword') }}" value="{{ request('keyword') }}"
-                                            autocomplete="off" class="text-gray-900">
+                                            autocomplete="off">
                                         <div class="icon-badge">
                                             <x-svg.search-icon />
                                         </div>
@@ -48,13 +48,21 @@
                                     <input type="hidden" name="long" id="long" value="">
                                     @php
                                         $oldLocation = request('location');
-                                        $map = $setting->default_map;
+                                        $map = setting('default_map');
                                     @endphp
-
-                                    @if ($map == 'google-map')
+                                    <!--  @if ($map == 'map-box')
+                                        <div class="flex-grow-1 fromGroup has-icon">
+                                            <input type="hidden" name="location" id="insertlocation" value="">
+                                            <span id="geocoder"></span>
+                                            <div class="icon-badge">
+                                                <x-svg.location-icon stroke="{{ $setting->frontend_primary_color }}"
+                                                    width="24" height="24" />
+                                            </div>
+                                        </div>
+                                   @elseif ($map == 'google-map')
                                         <div class="flex-grow-1 fromGroup has-icon banner-select no-border">
                                             <input type="text" id="searchInput" placeholder="{{ __('enter_location') }}"
-                                                name="location" value="{{ $oldLocation }}" class="text-gray-900">
+                                                name="location" value="{{ $oldLocation }}" />
                                             <div id="google-map" class="d-none"></div>
                                             <div class="icon-badge">
                                                 <x-svg.location-icon stroke="{{ $setting->frontend_primary_color }}"
@@ -65,32 +73,28 @@
                                         <div class="flex-grow-1 fromGroup has-icon banner-select no-border">
                                             <input name="long" class="leaf_lon" type="hidden">
                                             <input name="lat" class="leaf_lat" type="hidden">
-                                            <input type="text" id="leaflet_search"
-                                                placeholder="{{ __('enter_location') }}" name="location"
-                                                value="{{ $oldLocation }}" autocomplete="off" class="text-gray-900">
+                                            <input type="text" id="leaflet_search" placeholder="{{ __('enter_location') }}"
+                                                name="location" value="{{ $oldLocation }}" autocomplete="off"/>
                                             <div class="icon-badge">
                                                 <x-svg.location-icon stroke="{{ $setting->frontend_primary_color }}"
                                                     width="24" height="24" />
                                             </div>
                                         </div>
-                                    @endif
+                                    @endif  -->
                                     <div class="flex-grow-0">
                                         <button type="submit"
-                                            class="btn btn-primary d-block d-md-inline-block ">{{ __('find_job_now') }}</button>
+                                            class="btn btn-primary d-block d-md-inline-block ">{{ __('find_job') }}</button>
                                     </div>
                                 </div>
                             </form>
                             @if ($top_categories->count())
                                 <div class="f-size-14 banner-quciks-links " data-aos="" data-aos-duration="1000"
                                     data-aos-delay="500">
-                                    <span class="text-gray-400">{{ __('suggestion') }}: </span>
+                                    <div class="tw-font-semibold">{{ __('suggestion') }} </div>
                                     @foreach ($top_categories as $item)
-                                        @if ($item->slug)
-                                            <a
-                                                href="{{ route('website.job.category.slug', ['category' => $item->slug]) }}">
-                                                {{ $item->name }} {{ !$loop->last ? ',' : '' }}
-                                            </a>
-                                        @endif
+                                        <a class="hsitmt" href="{{ route('website.job', ['category' => $item->id]) }}">
+                                            {{ $item->name }} {{ !$loop->last ? '' : '' }}
+                                        </a>
                                     @endforeach
                                 </div>
                             @endif
@@ -100,10 +104,12 @@
                         <div class="banner-mockup d-none d-xl-block w-100 text-right">
                             <div class="addimg-1 position-parent video-btn-center">
                                 @if ($cms_setting->home_page_banner_image)
-                                    <img src="{{ asset($cms_setting->home_page_banner_image) }}" alt="home page banner"
-                                        draggable="false" loading="lazy">
+                                    <img src="{{ asset($cms_setting->home_page_banner_image) }}" alt=""
+                                        draggable="false">
                                 @else
-                                    <x-banner-image />
+                                  <!--  <x-banner-image />  -->
+                                     <img src="https://qatarjobs.qa/frontend/assets/images/all-img/home-banner-w.webp" alt=""
+                                        draggable="false">
                                 @endif
                             </div>
                         </div>
@@ -112,6 +118,7 @@
             </div>
         </div>
     </section>
+
 
     <!-- Counter Start -->
     <div class="counter-area">

@@ -1537,5 +1537,12 @@
     "size": "Size",
     "industry": "Industry",
     "user_ip_manage": "User Ip Manage",
-    "registration_is_currently_disabled_smtp_settings_are_not_properly_configured": "Registration is currently disabled. SMTP settings are not properly configured."
+    "registration_is_currently_disabled_smtp_settings_are_not_properly_configured": "Registration is currently disabled. SMTP settings are not properly configured.",
+    "available_immediately": "Available Immediately",
+    "available_in15days": "Available in 15 days",
+    "available_in30days": "Available in 30 days",
+    "available_in45days": "Available in 45 days",
+    "available_in60days": "Available in 60 days",
+    "available_in90days": "Available in 90 days",
+    "quick_apply": "Quick Apply"
 }

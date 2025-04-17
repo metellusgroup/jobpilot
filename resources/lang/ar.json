@@ -1537,5 +1537,12 @@
     "size": "الحجم",
     "industry": "الصناعة",
     "user_ip_manage": "إدارة IP المستخدم",
-    "registration_is_currently_disabled_smtp_settings_are_not_properly_configured": "التسجيل معطل حالياً، إعدادات SMTP غير متكوّنة بشكل صحيح"
+    "registration_is_currently_disabled_smtp_settings_are_not_properly_configured": "التسجيل معطل حالياً، إعدادات SMTP غير متكوّنة بشكل صحيح",
+    "available_immediately": "متاح على الفور",
+    "available_in15days": "متاح في 15 يوم",
+    "available_in30days": "متاح في 30 يوم",
+    "available_in45days": "متاح في 45 يوم",
+    "available_in60days": "متاح في 60 يوم",
+    "available_in90days": "متاح في 90 يوم",
+    "quick_apply": "التقديم السريع"
 }
