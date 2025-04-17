@@ -374,7 +374,7 @@
                                                         class="rt-selectactive form-control w-100-p">
                                                         <option value="">{{ __('select_one') }}</option>
                                                         @foreach ($visastatuses as $visastatus)
-                                                        <option value="{{ $visastatus->id }}" {{ $candidate_visa_status->id ==$visastatus->id
+                                                        <option value="{{ $visastatus->id }}" {{ $candidate_visa_status->id ?? null ==$visastatus->id
                                                             ? 'selected' : '' }}>
                                                             {{ $visastatus->visa_status }}
                                                         </option>
@@ -392,7 +392,7 @@
                                                         class="rt-selectactive form-control w-100-p">
                                                         <option value="">{{ __('select_one') }}</option>
                                                         @foreach ($drivinglicenses as $drivinglicense)
-                                                        <option value="{{ $drivinglicense->id }}" {{    $driving_license->id==$drivinglicense->id
+                                                        <option value="{{ $drivinglicense->id }}" {{    $driving_license->id ?? null ==$drivinglicense->id
                                                             ? 'selected' : '' }}>
                                                             {{ $drivinglicense->license_status }}
                                                         </option>
@@ -410,7 +410,7 @@
                                                         class="rt-selectactive form-control w-100-p">
                                                         <option value="">{{ __('select_one') }}</option>
                                                         @foreach ($nationalities as $nationality)
-                                                            <option value="{{ $nationality->id }}" {{ $nationality->id ==$candidate->nationality_id
+                                                            <option value="{{ $nationality->id }}" {{ $nationality->id ?? null ==$candidate->nationality_id
                                                                 ? 'selected' : '' }}>
                                                             {{ $nationality->nationality }}
                                                         </option>
