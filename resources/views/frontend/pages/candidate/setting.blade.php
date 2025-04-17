@@ -344,16 +344,108 @@
                                                         class="rt-selectactive form-control w-100-p">
                                                         <option value="">{{ __('select_one') }}</option>
                                                         <option
-                                                            {{ old('status', $candidate->status) == 'available' ? 'selected' : '' }}
-                                                            value="available">{{ __('available') }}</option>
+                                                            {{ old('status', $candidate->status) == 'available_immediately' ? 'selected' : '' }}
+                                                            value="available_immediately">{{ __('available_immediately') }}</option>
                                                         <option
-                                                            {{ old('status', $candidate->status) == 'not_available' ? 'selected' : '' }}
-                                                            value="not_available">{{ __('not_available') }}</option>
+                                                            {{ old('status', $candidate->status) == 'available_in15days' ? 'selected' : '' }}
+                                                            value="available_in15days">{{ __('available_in15days') }}</option>
                                                         <option
-                                                            {{ old('status', $candidate->status) == 'available_in' ? 'selected' : '' }}
-                                                            value="available_in">{{ __('available_in') }}</option>
+                                                            {{ old('status', $candidate->status) == 'available_in30days' ? 'selected' : '' }}
+                                                            value="available_in30days">{{ __('available_in30days') }}</option>
+                                                        <option
+                                                            {{ old('status', $candidate->status) == 'available_in45days' ? 'selected' : '' }}
+                                                            value="available_in45days">{{ __('available_in45days') }}</option>
+                                                        <option
+                                                            {{ old('status', $candidate->status) == 'available_in60days' ? 'selected' : '' }}
+                                                            value="available_in60days">{{ __('available_in60days') }}</option>
+                                                        <option
+                                                            {{ old('status', $candidate->status) == 'available_in90days' ? 'selected' : '' }}
+                                                            value="available_in90days">{{ __('available_in90days') }}</option>
                                                     </select>
                                                     @error('status')
+                                                        <span
+                                                            class="error invalid-feedback d-block">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-lg-6 mb-3">
+                                                    <x-forms.label :required="true" name="visa_status"
+                                                        class="body-font-4 d-block text-gray-900 rt-mb-8" />
+                                                    <select id="available_status" name="status"
+                                                        class="rt-selectactive form-control w-100-p">
+                                                        <option value="">{{ __('select_one') }}</option>
+                                                        @foreach ($visastatuses as $visastatus)
+                                                        <option value="{{ $visastatus->id }}" {{ old('visastatus')==$visastatus->id
+                                                            ? 'selected' : '' }}>
+                                                            {{ $visastatus->visa_status }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('visa_status')
+                                                        <span
+                                                            class="error invalid-feedback d-block">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-lg-6 mb-3">
+                                                    <x-forms.label :required="true" name="driving_license"
+                                                        class="body-font-4 d-block text-gray-900 rt-mb-8" />
+                                                    <select id="available_status" name="status"
+                                                        class="rt-selectactive form-control w-100-p">
+                                                        <option value="">{{ __('select_one') }}</option>
+                                                        @foreach ($drivinglicenses as $drivinglicense)
+                                                        <option value="{{ $drivinglicense->id }}" {{ old('drivinglicense')==$drivinglicense->id
+                                                            ? 'selected' : '' }}>
+                                                            {{ $drivinglicense->license_status }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('driving_license')
+                                                        <span
+                                                            class="error invalid-feedback d-block">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-lg-6 mb-3">
+                                                    <x-forms.label :required="true" name="nationality"
+                                                        class="body-font-4 d-block text-gray-900 rt-mb-8" />
+                                                    <select id="nationality_id" name="nationality_id"
+                                                        class="rt-selectactive form-control w-100-p">
+                                                        <option value="">{{ __('select_one') }}</option>
+                                                        @foreach ($nationalities as $nationality)
+                                                        <option value="{{ $nationality->id }}" {{ old('nationality_id')==$nationality->id
+                                                            ? 'selected' : '' }}>
+                                                            {{ $nationality->name }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('nationality_id')
+                                                        <span
+                                                            class="error invalid-feedback d-block">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-lg-6 mb-3">
+                                                    <x-forms.label :required="true" name="noc_available"
+                                                        class="body-font-4 d-block text-gray-900 rt-mb-8" />
+                                                    <select id="available_status" name="status"
+                                                        class="rt-selectactive form-control w-100-p">
+                                                        <option value="">{{ __('select_one') }}</option>
+                                                        <option value="yes" @if($candidate->noc_available=='yes' ) selected @endif>{{
+                                                            __('yes') }}</option>
+                                                        <option value="no" @if($candidate->noc_available=='no' ) selected @endif>{{
+                                                            __('no') }}</option>
+                                                        <option value="not_applicable" @if($candidate->noc_available=='not_applicable' )
+                                                            selected @endif>{{ __('not_applicable') }}</option>
+                                                    </select>
+                                                    @error('noc_available')
+                                                        <span
+                                                            class="error invalid-feedback d-block">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+        
+                                                <div class="col-lg-6 mb-3">
+                                                    <x-forms.label :required="true" name="expected_salary"
+                                                        class="body-font-4 d-block text-gray-900 rt-mb-8" />
+                                                    <input type="text" name="expected_salary" class="form-control"
+                                                        value="{{ old('expected_salary', $candidate->expected_salary) }}">
+                                                    @error('expected_salary')
                                                         <span
                                                             class="error invalid-feedback d-block">{{ $message }}</span>
                                                     @enderror

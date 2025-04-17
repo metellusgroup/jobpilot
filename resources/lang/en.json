@@ -1544,5 +1544,10 @@
     "available_in45days": "Available in 45 days",
     "available_in60days": "Available in 60 days",
     "available_in90days": "Available in 90 days",
-    "quick_apply": "Quick Apply"
+    "quick_apply": "Quick Apply",
+    "visa_status": "Visa Status",
+    "driving_license": "Driving License",
+    "nationality": "Nationality",
+    "noc_available": "Noc Available",
+    "expected_salary": "Expected Salary"
 }

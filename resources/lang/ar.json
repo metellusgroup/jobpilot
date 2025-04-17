@@ -1544,5 +1544,10 @@
     "available_in45days": "متاح في 45 يوم",
     "available_in60days": "متاح في 60 يوم",
     "available_in90days": "متاح في 90 يوم",
-    "quick_apply": "التقديم السريع"
+    "quick_apply": "التقديم السريع",
+    "visa_status": "حالة الرخصة",
+    "driving_license": "رخصة القيادة",
+    "nationality": "الجنسية",
+    "noc_available": "متاحة الرخصة",
+    "expected_salary": "الراتب المتوقع"
 }

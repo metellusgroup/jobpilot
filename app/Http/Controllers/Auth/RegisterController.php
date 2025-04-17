@@ -237,9 +237,29 @@ class RegisterController extends Controller
     {
         \Log::info('Submitted status value: ' . $request->status);
 
-        // $request->validate([
-        //     'status' => 'required|in:available,not_available,available_in',
-        // ]);
+        $request->validate([
+'name' => 'required|string|min:4|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'birth_date' => 'required|date',
+            'gender' => 'required|in:male,female,other',
+            'marital_status' => 'required|in:married,single,divorced,widowed',
+            'nationality' => 'required|exists:candidate_nationalities,id',
+            'visastatus' => 'required|exists:candidate_visas,id',
+            'noc_available' => 'required|in:yes,no,not_applicable',
+            'licensestatus' => 'required|exists:candidate_licenses,id',
+            'current_location' => 'required|string',
+            'profession' => 'required',
+            'jobs_types' => 'required|array',
+            'jobs_types.*' => 'exists:job_types,id',
+            'languages' => 'required|array',
+            'languages.*' => 'exists:candidate_languages,id',
+            'education' => 'required|exists:education,id',
+            'experience' => 'required|exists:experiences,id',
+            'status' => 'required',
+            'expected_salary' => 'required|numeric|min:1000',
+            'file_upload' => 'required|mimes:pdf,jpg,jpeg,doc,docx|max:5120',
+            'prefixphone' => 'required',        ]);
 
         $newUsername = Str::slug($request['name']);
 

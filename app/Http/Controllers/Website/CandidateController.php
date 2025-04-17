@@ -2,24 +2,29 @@
 
 namespace App\Http\Controllers\Website;
 
-use App\Http\Controllers\Controller;
+use App\Models\Skill;
+use App\Models\Company;
+use App\Models\JobRole;
+use App\Models\JobType;
+use App\Models\Candidate;
+use App\Models\Education;
+use App\Models\AppliedJob;
+use App\Models\Experience;
+use App\Models\Profession;
+use App\Models\ContactInfo;
+use Illuminate\Http\Request;
+use App\Models\CandidateVisa;
+use App\Models\CandidateResume;
+use App\Models\CandidateJobType;
+use App\Models\CandidateLicense;
+use App\Models\CandidateLanguage;
 use App\Http\Traits\CandidateAble;
+use App\Http\Controllers\Controller;
+use App\Models\CandidateNationality;
 use App\Http\Traits\CandidateSkillAble;
 use App\Http\Traits\HasCandidateResume;
-use App\Models\AppliedJob;
-use App\Models\Candidate;
-use App\Models\CandidateLanguage;
-use App\Models\CandidateResume;
-use App\Models\Company;
-use App\Models\ContactInfo;
-use App\Models\Education;
-use App\Models\Experience;
-use App\Models\JobRole;
-use App\Models\Profession;
-use App\Models\Skill;
-use App\Services\Website\Candidate\CandidateSettingUpdateService;
 use App\Services\Website\Candidate\DashboardService;
-use Illuminate\Http\Request;
+use App\Services\Website\Candidate\CandidateSettingUpdateService;
 
 class CandidateController extends Controller
 {
@@ -226,8 +231,12 @@ class CandidateController extends Controller
             $professions = Profession::all()->sortBy('name');
             $skills = Skill::all()->sortBy('name');
             $languages = CandidateLanguage::all(['id', 'name']);
+            $candidateJobTypes = CandidateJobType::where('candidate_id', $candidate->id)->get();
+            $jobTypes = JobType::all();
             $candidate->load('skills', 'languages', 'experiences', 'educations', 'jobRoleAlerts:id,candidate_id,job_role_id');
-
+            $visastatuses = CandidateVisa::all();
+            $drivinglicenses = CandidateLicense::all();
+            $nationalities = CandidateNationality::all();
             return view('frontend.pages.candidate.setting', [
                 'candidate' => $candidate->load('skills', 'languages'),
                 'contact' => $contact,
@@ -239,6 +248,10 @@ class CandidateController extends Controller
                 'resumes' => $resumes,
                 'skills' => $skills,
                 'candidate_languages' => $languages,
+                'visastatuses' => $visastatuses,
+                'drivinglicenses' => $drivinglicenses,
+                'nationalities' => $nationalities,
+                'jobtypes' => $jobTypes,
             ]);
         } catch (\Exception $e) {
             flashError('An error occurred: '.$e->getMessage());
