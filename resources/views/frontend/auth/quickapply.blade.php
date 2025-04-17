@@ -1,4 +1,4 @@
-@extends('frontend.auth.layouts.auth')
+@extends('frontend.layouts.app')
 
 @section('meta')
     @php
@@ -18,27 +18,48 @@
     {{ asset($data->image) }}
 @endsection
 
-@section('content')
+@section('main')
 <div class="row mt-0 mt-5">
-    <div class="full-height col-12 order-1 order-lg-0">
+    <div class="full-height1 col-12 order-1 order-lg-0">
 
         <div class="container">
-            <div class="row full-height align-items-center">
+            <div class="row full-height1 align-items-center">
                 <div class="col-xl-12 col-lg-12 col-md-12 tw-bg-white tw-relative tw-mt-5 tw-z-50">
                     <div class="auth-box2">
                         <form id="formId" action="{{ route('submit.application') }}" method="POST" class="rt-form"
                             enctype="multipart/form-data">
                             @csrf
                             <div class="row">
-                                <div class="col-6">
-                                    <h4 class="rt-mb-20 rt-mb-15">{{ __('quick_apply') }}</h4>
-                                    <span class="d-block body-font-3 text-gray-600 rt-mb-32">
-                                        {{ __('already_have_account') }}
-                                        <span>
-                                            <a href="{{ route('login') }}">{{ __('log_in') }}</a>
-                                        </span>
-                                    </span>
+                                <div class="col-12">
+                                    <h2 class="rt-mb-20 rt-mb-15 text-center mb-5 gradient-text">
+                                        {{ __('quick_apply') }}
+                                    </h2>
                                 </div>
+                                <style>
+                                  .gradient-text {
+    background: linear-gradient(270deg, 
+        #00c6ff,   /* Light Cyan Blue */
+        #0072ff,   /* Strong Blue */
+        #4b6cb7,   /* Soft Blue Purple */
+        #182848,   /* Deep Blue Navy */
+        #00d2ff,   /* Sky Blue */
+        #3a7bd5,   /* Ocean Blue */
+        #00c6ff    /* Repeat for seamless loop */
+    );
+    background-size: 1400% 1400%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 10s ease infinite;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+                                </style>
+                                
 
                             </div>
                             <div class="row">
