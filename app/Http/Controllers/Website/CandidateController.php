@@ -231,12 +231,14 @@ class CandidateController extends Controller
             $professions = Profession::all()->sortBy('name');
             $skills = Skill::all()->sortBy('name');
             $languages = CandidateLanguage::all(['id', 'name']);
-            $candidateJobTypes = CandidateJobType::where('candidate_id', $candidate->id)->get();
             $jobTypes = JobType::all();
             $candidate->load('skills', 'languages', 'experiences', 'educations', 'jobRoleAlerts:id,candidate_id,job_role_id');
             $visastatuses = CandidateVisa::all();
             $drivinglicenses = CandidateLicense::all();
             $nationalities = CandidateNationality::all();
+            $driving_license = CandidateLicense::where('id', $candidate->driving_license)->first();
+            $candidate_visa_status = CandidateVisa::where('id', $candidate->candidate_visa_status_id)->first();
+            $nationality = CandidateNationality::where('id', $candidate->nationality_id)->first();
             return view('frontend.pages.candidate.setting', [
                 'candidate' => $candidate->load('skills', 'languages'),
                 'contact' => $contact,
@@ -252,6 +254,9 @@ class CandidateController extends Controller
                 'drivinglicenses' => $drivinglicenses,
                 'nationalities' => $nationalities,
                 'jobtypes' => $jobTypes,
+                'candidate_visa_status' => $candidate_visa_status,
+                'driving_license' => $driving_license,
+                'nationality' => $nationality,
             ]);
         } catch (\Exception $e) {
             flashError('An error occurred: '.$e->getMessage());

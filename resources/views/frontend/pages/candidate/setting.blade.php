@@ -370,11 +370,11 @@
                                                 <div class="col-lg-6 mb-3">
                                                     <x-forms.label :required="true" name="visa_status"
                                                         class="body-font-4 d-block text-gray-900 rt-mb-8" />
-                                                    <select id="available_status" name="status"
+                                                    <select id="visa_status" name="visa_status"
                                                         class="rt-selectactive form-control w-100-p">
                                                         <option value="">{{ __('select_one') }}</option>
                                                         @foreach ($visastatuses as $visastatus)
-                                                        <option value="{{ $visastatus->id }}" {{ old('visastatus')==$visastatus->id
+                                                        <option value="{{ $visastatus->id }}" {{ $candidate_visa_status->id ==$visastatus->id
                                                             ? 'selected' : '' }}>
                                                             {{ $visastatus->visa_status }}
                                                         </option>
@@ -388,11 +388,11 @@
                                                 <div class="col-lg-6 mb-3">
                                                     <x-forms.label :required="true" name="driving_license"
                                                         class="body-font-4 d-block text-gray-900 rt-mb-8" />
-                                                    <select id="available_status" name="status"
+                                                    <select id="driving_license" name="driving_license"
                                                         class="rt-selectactive form-control w-100-p">
                                                         <option value="">{{ __('select_one') }}</option>
                                                         @foreach ($drivinglicenses as $drivinglicense)
-                                                        <option value="{{ $drivinglicense->id }}" {{ old('drivinglicense')==$drivinglicense->id
+                                                        <option value="{{ $drivinglicense->id }}" {{    $driving_license->id==$drivinglicense->id
                                                             ? 'selected' : '' }}>
                                                             {{ $drivinglicense->license_status }}
                                                         </option>
@@ -410,9 +410,9 @@
                                                         class="rt-selectactive form-control w-100-p">
                                                         <option value="">{{ __('select_one') }}</option>
                                                         @foreach ($nationalities as $nationality)
-                                                        <option value="{{ $nationality->id }}" {{ old('nationality_id')==$nationality->id
-                                                            ? 'selected' : '' }}>
-                                                            {{ $nationality->name }}
+                                                            <option value="{{ $nationality->id }}" {{ $nationality->id ==$candidate->nationality_id
+                                                                ? 'selected' : '' }}>
+                                                            {{ $nationality->nationality }}
                                                         </option>
                                                         @endforeach
                                                     </select>
@@ -424,7 +424,7 @@
                                                 <div class="col-lg-6 mb-3">
                                                     <x-forms.label :required="true" name="noc_available"
                                                         class="body-font-4 d-block text-gray-900 rt-mb-8" />
-                                                    <select id="available_status" name="status"
+                                                    <select id="noc_available" name="noc_available"
                                                         class="rt-selectactive form-control w-100-p">
                                                         <option value="">{{ __('select_one') }}</option>
                                                         <option value="yes" @if($candidate->noc_available=='yes' ) selected @endif>{{
@@ -443,7 +443,7 @@
                                                 <div class="col-lg-6 mb-3">
                                                     <x-forms.label :required="true" name="expected_salary"
                                                         class="body-font-4 d-block text-gray-900 rt-mb-8" />
-                                                    <input type="text" name="expected_salary" class="form-control"
+                                                    <input type="text" name="expected_salary" class="form-control" min="1000"
                                                         value="{{ old('expected_salary', $candidate->expected_salary) }}">
                                                     @error('expected_salary')
                                                         <span

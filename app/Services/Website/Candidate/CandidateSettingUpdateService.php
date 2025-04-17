@@ -189,13 +189,14 @@ class CandidateSettingUpdateService
             'marital_status' => 'required',
             'profession' => 'required',
             'status' => 'required',
+            'visa_status' => 'required',
+            'driving_license' => 'required',
+            'nationality_id' => 'required',
+            'noc_available' => 'required',
+            'expected_salary' => 'required',
         ]);
 
-        if ($request->status == 'available_in') {
-            $request->validate([
-                'available_in' => 'required',
-            ]);
-        }
+      
 
         // Profession
         $profession_request = $request->profession;
@@ -221,7 +222,13 @@ class CandidateSettingUpdateService
             'bio' => $request->bio,
             'profession_id' => $profession_id,
             'status' => $request->status,
-            'available_in' => $request->available_in ? Carbon::parse($request->available_in)->format('Y-m-d') : null,
+            'available_in' =>   null,
+            'candidate_visa_status_id' => $request->visa_status,
+            'driving_license' => $request->driving_license,
+            'nationality_id' => $request->nationality_id,
+            'noc_available' => $request->noc_available,
+            'expected_salary' => $request->expected_salary,
+
         ]);
 
         // skill & language
