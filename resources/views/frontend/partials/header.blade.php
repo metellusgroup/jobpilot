@@ -432,7 +432,7 @@ config('templatecookie.default_language'))->first();
                             @endif
                         </div>
                         @endif
-                        @if (count($headerCurrencies) && $setting->currency_switcher)
+                        {{-- @if (count($headerCurrencies) && $setting->currency_switcher)
                         @php
                         $currency_count = count($headerCurrencies) && count($headerCurrencies) > 1;
                         $current_currency_code = currentCurrencyCode();
@@ -508,7 +508,7 @@ config('templatecookie.default_language'))->first();
                                 </div>
                             </div>
                         </form>
-                        @endif
+                        @endif --}}
                     </div>
                     <div class="mobile-menu">
                         <div class="menu-click tw-pe-3">
