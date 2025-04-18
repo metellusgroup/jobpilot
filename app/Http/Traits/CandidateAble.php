@@ -36,16 +36,16 @@ trait CandidateAble
             $query = Candidate::with(['user.contactInfo', 'user' => function ($query) {
                 $query->where('role', 'candidate');
             }])
-                ->where('visibility', 1);
+            ->where('visibility', 1);
         }
 
         // status
-        if ($request->has('status') && $request->status != null) {
-            $query->where('status', $request->status);
-        } else {
-            $query->where('status', 'available');
-            $request['status'] = 'available';
-        }
+        // if ($request->has('status') && $request->status != null) {
+        //     $query->where('status', $request->status);
+        // } else {
+        //     $query->where('status', 'available');
+        //     $request['status'] = 'available';
+        // }
 
         // keyword
         if ($request->has('keyword') && $request->keyword != null) {
@@ -123,7 +123,6 @@ trait CandidateAble
                 });
             }
         }
-
         // perpage
         $candidates = $query->latest()->with('profession', 'experience:id');
 

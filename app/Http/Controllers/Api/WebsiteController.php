@@ -67,6 +67,7 @@ class WebsiteController extends Controller
 
     public function candidates(Request $request)
     {
+        
         return $this->respondWithSuccess([
             'data' => (new CandidateListService)->execute($request),
         ]);

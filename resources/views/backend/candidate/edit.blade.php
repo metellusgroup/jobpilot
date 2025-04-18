@@ -254,11 +254,11 @@
                                     <x-forms.label name="gender" />
                                     <select name="gender" id="gender"
                                         class="form-control @error('gender') is-invalid @enderror">
-                                        <option value="машко" {{ $candidate->gender == 'машко' ? 'selected' : '' }}>
+                                        <option value="male" {{ $candidate->gender == 'male' ? 'selected' : '' }}>
                                             {{ __('male') }}</option>
-                                        <option value="женско" {{ $candidate->gender == 'женско' ? 'selected' : '' }}>
+                                        <option value="female" {{ $candidate->gender == 'female' ? 'selected' : '' }}>
                                             {{ __('female') }}</option>
-                                        <option value="друго" {{ $candidate->gender == 'машко' ? 'selected' : '' }}>
+                                        <option value="other" {{ $candidate->gender == 'other' ? 'selected' : '' }}>
                                             {{ __('other') }}</option>
                                     </select>
                                     @error('gender')

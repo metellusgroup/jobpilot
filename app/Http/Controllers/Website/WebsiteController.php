@@ -280,6 +280,7 @@ class WebsiteController extends Controller
      */
     public function candidates(Request $request)
     {
+        
         abort_if(auth('user')->check() && authUser()->role == 'candidate', 404);
 
         try {
@@ -296,7 +297,6 @@ class WebsiteController extends Controller
 
             // reset candidate cv views history
             $this->reset();
-
             return view('frontend.pages.candidates', $data);
         } catch (\Exception $e) {
             flashError('An error occurred: '.$e->getMessage());

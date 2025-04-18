@@ -218,9 +218,9 @@
                                     <x-forms.label name="gender" :required="false" />
                                     <select name="gender" id="gender"
                                         class="form-control select2bs4 @error('gender') is-invalid @enderror">
-                                        <option value="машко">{{ __('male') }}</option>
-                                        <option value="женско">{{ __('female') }}</option>
-                                        <option value="друго">{{ __('other') }}</option>
+                                        <option value="male">{{ __('male') }}</option>
+                                        <option value="female">{{ __('female') }}</option>
+                                        <option value="other">{{ __('other') }}</option>
                                     </select>
                                     @error('gender')
                                     <span class="invalid-feedback" role="alert">{{ __($message) }}</span>

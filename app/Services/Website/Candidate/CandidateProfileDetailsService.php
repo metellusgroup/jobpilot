@@ -2,8 +2,12 @@
 
 namespace App\Services\Website\Candidate;
 
-use App\Models\User;
 use Carbon\Carbon;
+use App\Models\User;
+use App\Models\CandidateVisa;
+use App\Models\CandidateLicense;
+use App\Models\CandidateLanguage;
+use App\Models\CandidateNationality;
 
 class CandidateProfileDetailsService
 {
@@ -17,7 +21,7 @@ class CandidateProfileDetailsService
         if ($user->role != 'company') {
             $candidate = User::where('username', $request->username)
                 ->with(['contactInfo', 'socialInfo', 'candidate' => function ($query) {
-                    $query->with('experience', 'education', 'experiences', 'educations', 'profession', 'languages:id,name', 'skills', 'socialInfo');
+                    $query->with('experience', 'education', 'experiences', 'educations', 'profession', 'languages:id,name', 'skills', 'socialInfo', 'visaStatus', 'drivingLicense', 'nationality');
                 }])->firstOrFail();
             $languages = $candidate->candidate
                 ->languages()
@@ -41,7 +45,7 @@ class CandidateProfileDetailsService
 
         $candidate = User::where('username', $request->username)
             ->with(['contactInfo', 'socialInfo', 'candidate' => function ($query) {
-                $query->with('experience', 'education', 'experiences', 'educations', 'profession', 'languages:id,name', 'skills', 'socialInfo')
+                $query->with('experience', 'education', 'experiences', 'educations', 'profession', 'languages:id,name', 'skills', 'socialInfo', 'visaStatus', 'drivingLicense', 'nationality')
                     ->withCount(['bookmarkCandidates as bookmarked' => function ($q) {
                         $q->where('company_id', currentCompany()->id);
                     }])
@@ -78,7 +82,14 @@ class CandidateProfileDetailsService
 
         $skills = $candidate->candidate->skills->pluck('name');
         $candidate_skills = $skills ? implode(', ', json_decode(json_encode($skills), true)) : '';
-
+        $driving_license = CandidateLicense::where('id', $candidate->candidate->driving_license)->first();
+        $candidate_visa_status = CandidateVisa::where('id', $candidate->candidate->candidate_visa_status_id)->first();
+        $nationality = CandidateNationality::where('id', $candidate->candidate->nationality_id)->first();
+        $language = CandidateLanguage::where('id', $candidate->candidate->nationality_id)->first();
+        $candidate->candidate->drivingLicense = $driving_license ?? '';
+        $candidate->candidate->visa_status = $candidate_visa_status ?? '';
+        $candidate->candidate->nationality = $nationality ?? '';
+        $candidate->candidate->language = $candidate_languages ?? $language ?? '';
         return [
             'success' => true,
             'data' => $candidate,

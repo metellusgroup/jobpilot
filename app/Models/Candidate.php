@@ -284,4 +284,21 @@ class Candidate extends Model
     {
         return $this->belongsToMany(JobType::class, 'candidate_job_types');
     }
+    public function nationality()
+    {
+        return $this->belongsTo(CandidateNationality::class, 'nationality_id');
+    }
+    public function visaStatus()
+{
+    return $this->belongsTo(CandidateVisa::class, 'candidate_visa_status_id');
+}
+
+   
+    public function drivingLicense()
+    {
+        return $this->belongsTo(CandidateLicense::class, 'driving_license_id');
+    }
+    
+    
+    
 }

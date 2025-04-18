@@ -549,6 +549,15 @@ $data = metaData('candidates');
                         .name) : ''
                     data.candidate.education ? $('#candidate_education').html(capitalizeFirstLetter(data
                         .candidate.education.name)) : ''
+                    data.candidate.noc_available ? $('#candidate_noc_available').html(capitalizeFirstLetter(data
+                        .candidate.noc_available)) : ''
+                    data.candidate.drivingLicense ? $('#candidate_driving_license').html(capitalizeFirstLetter(data
+                        .candidate.drivingLicense.license_status)) : ''
+                    data.candidate.visa_status ? $('#candidate_visa_status').html(capitalizeFirstLetter(data
+                        .candidate.visa_status.visa_status)) : ''
+                    data.candidate.nationality ? $('#candidate_language').html(capitalizeFirstLetter(data
+                        .candidate.nationality.nationality)) : ''
+                        
 
                     if (data.candidate.website) {
                         $('#candidate_website').attr('href', data.candidate.website);
