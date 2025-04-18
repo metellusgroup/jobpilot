@@ -391,14 +391,14 @@ config('templatecookie.default_language'))->first();
                     </div>
 
                     <div class="n-header--top__right d-flex align-items-center tw-px-3">
-                        @if ($cms_setting?->footer_phone_no)
+                        {{-- @if ($cms_setting?->footer_phone_no)
                         <div class="contact-info xs:tw-inline-flex tw-hidden">
                             <a class="text-gray-900" href="tel:{{ $cms_setting?->footer_phone_no }}">
                                 <x-svg.telephone2-icon />
                                 {{ $cms_setting?->footer_phone_no }}
                             </a>
                         </div>
-                        @endif
+                        @endif --}}
                         @if ($setting->language_changing)
                         <div class="dropdown">
                             @php
