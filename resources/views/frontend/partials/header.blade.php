@@ -387,7 +387,7 @@ config('templatecookie.default_language'))->first();
                                 </div>
                                 @endif
                             </div>
-                        </div>
+           z             </div>
                     </div>
 
                     <div class="n-header--top__right d-flex align-items-center tw-px-3">
@@ -526,7 +526,7 @@ config('templatecookie.default_language'))->first();
                 <div class="d-flex flex-wrap  tw-gap-2 tw-items-center">
                     <div class="n-header--bottom__left d-flex align-items-center">
                         <a href="{{ route('website.home') }}" class="brand-logo">
-                            <img src="{{ $setting->dark_logo_url }}" alt="logo">
+                            <img src="{{ $setting->light_logo_url }}" alt="logo">
                         </a>
 
                         @php
