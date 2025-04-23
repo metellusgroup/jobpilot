@@ -447,7 +447,6 @@ class WebsiteController extends Controller
     public function candidateDownloadCv(CandidateResume $resume)
     {
         try {
-            dd($resume->file);
 
             // $company_id = auth()->user()->companyId();
             // $hasCandidate = DB::table('applied_jobs')
