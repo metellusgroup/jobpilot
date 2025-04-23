@@ -469,7 +469,7 @@ class WebsiteController extends Controller
             //     return redirect()->back();
             // }
 
-            $filePath = url($resume->file);
+            $filePath = $resume->file;
             $filename = time().'.pdf';
             $headers = ['Content-Type: application/pdf', 'filename' => $filename];
             $fileName = rand().'-resume'.'.pdf';
