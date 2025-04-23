@@ -26,8 +26,6 @@
     <div class="row">
         <div class="auth-page2 order-1 order-lg-0">
             <div class="rt-spacer-100  rt-spacer-lg-50 rt-spacer-xs-50"></div>
-            <div class="rt-spacer-100 rt-spacer-lg-50 rt-spacer-xs-0"></div>
-            <div class="rt-spacer-50 rt-spacer-lg-0 rt-spacer-xs-0"></div>
             <div class="container">
                 <div class="row ">
                     <div class="col-xl-5 col-lg-8 col-md-9">

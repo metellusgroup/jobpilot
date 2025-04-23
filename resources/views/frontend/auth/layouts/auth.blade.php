@@ -83,8 +83,8 @@
     <header class=" ">
         <div class="main-header">
             <div class="navbar">
-                <div class="container container-full-xxl">
-                    <a href="/" class="brand-logo"><img src="{{ $setting->light_logo_url }}" alt="logo"></a>
+                <div class="container container-full-xxl mt-5">
+                    <a href="/" class="brand-logo"><img src="{{ $setting->dark_logo_url }}" alt="logo" width="300" height="65"></a>
                 </div><!-- /.container -->
             </div><!-- /.navbar -->
         </div><!-- /.main-header -->

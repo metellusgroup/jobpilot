@@ -19,7 +19,7 @@
 @endsection
 
 @section('content')
-    <div class="row mt-0 mt-lg-5">
+    <div class="row">
         <div class="full-height col-12 order-1 order-lg-0">
             <div class="container">
                 <div class="row full-height align-items-center">
