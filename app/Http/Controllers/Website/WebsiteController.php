@@ -447,6 +447,7 @@ class WebsiteController extends Controller
     public function candidateDownloadCv(CandidateResume $resume)
     {
         try {
+            dd($resume);
 
             // $company_id = auth()->user()->companyId();
             // $hasCandidate = DB::table('applied_jobs')
@@ -463,7 +464,7 @@ class WebsiteController extends Controller
             //         ->where('id', $resume->candidate_id);
             // })->exists();
 
-            $resume = CandidateResume::where('id', $resume->candidate_id)->first();
+            // $resume = CandidateResume::where('candidate_id', $resume->candidate_id)->first();
 
             // if (! $hasCandidate) {
             //     return redirect()->back();
