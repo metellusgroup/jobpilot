@@ -469,11 +469,11 @@ class WebsiteController extends Controller
             //     return redirect()->back();
             // }
 
-            $filePath = $resume->file;
+            $filePath = 'public/'.$resume->file;
             $filename = time().'.pdf';
             $headers = ['Content-Type: application/pdf', 'filename' => $filename];
             $fileName = rand().'-resume'.'.pdf';
-
+            
             return response()->download($filePath, $fileName, $headers);
         } catch (\Exception $e) {
             flashError('An error occurred: '.$e->getMessage());
