@@ -448,24 +448,26 @@ class WebsiteController extends Controller
     {
         try {
 
-            $company_id = auth()->user()->companyId();
-            $hasCandidate = DB::table('applied_jobs')
-                ->whereIn('job_id', function ($query) use ($company_id) {
-                    $query->select('id')
-                        ->from('jobs')
-                        ->where('company_id', $company_id);
-                })
-                ->where('candidate_id', $resume->candidate_id)
-                ->exists();
+            // $company_id = auth()->user()->companyId();
+            // $hasCandidate = DB::table('applied_jobs')
+            //     ->whereIn('job_id', function ($query) use ($company_id) {
+            //         $query->select('id')
+            //             ->from('jobs')
+            //             ->where('company_id', $company_id);
+            //     })
+            //     ->where('candidate_id', $resume->candidate_id)
+            //     ->exists();
             // $user = auth()->user();
             // $hasCandidate = $user->company->applicationGroups()->whereHas('applications.candidate', function ($query) use ($user, $resume) {
             //     $query->where('user_id', $user->id)
             //         ->where('id', $resume->candidate_id);
             // })->exists();
 
-            if (! $hasCandidate) {
-                return redirect()->back();
-            }
+            $resume = CandidateResume::where('id', $resume->candidate_id)->first();
+
+            // if (! $hasCandidate) {
+            //     return redirect()->back();
+            // }
 
             $filePath = $resume->file;
             $filename = time().'.pdf';
