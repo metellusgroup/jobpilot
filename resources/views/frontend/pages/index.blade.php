@@ -5,7 +5,7 @@
 @endphp
 @section('description', $data->description)
 @section('og:image', asset($data->image))
-@section('title', $data->title)
+@section('title', $data->title . ' - ' . date('d F Y'))
 
 @section('main')
 

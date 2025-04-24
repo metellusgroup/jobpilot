@@ -169,7 +169,7 @@ class CompanyStoreService
                 $candidates = CandidateJobAlert::where('job_role_id', $jobCreated->role_id)->get();
 
                 foreach ($candidates as $candidate) {
-                    if ($candidate->candidate->received_job_alert) {
+                    if ($candidate->candidate?->received_job_alert != null) {
                         $candidate->candidate->user->notify(new RelatedJobNotification($jobCreated));
                     }
                 }

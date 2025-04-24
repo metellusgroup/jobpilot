@@ -10,7 +10,7 @@
     {{ asset($data->image) }}
 @endsection
 @section('title')
-    {{ $data->title }}
+    {{ $data->title . " - ". $jobs->count() . " Vacancies available" . " - ". date('d F Y') }}
 @endsection
 
 @section('main')

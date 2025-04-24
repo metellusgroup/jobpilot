@@ -119,7 +119,7 @@ class JobController extends Controller
                 $candidates = CandidateJobAlert::where('job_role_id', $job->role_id)->get();
 
                 foreach ($candidates as $candidate) {
-                    if ($candidate->candidate->received_job_alert) {
+                    if ($candidate->candidate->received_job_alert != null) {
                         $candidate->candidate->user->notify(new RelatedJobNotification($job));
                     }
                 }

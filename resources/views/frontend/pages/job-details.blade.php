@@ -9,7 +9,7 @@
 @endif
 @endsection
 @section('title')
-{{ $job->title }}
+{{"Job offer for " . $job->title . " at " . $job->company->user->name. "|" .$job->region ?? $job->place  . "|" . $job->country}}
 @endsection
 
 @section('ld-data')
