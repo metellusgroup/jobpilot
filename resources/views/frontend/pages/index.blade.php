@@ -616,7 +616,7 @@
                                                     {{ $company?->industry?->name ?? '' }}
                                                 </span>
                                                 <span
-                                                    class="tw-px-3 tw-py-1 tw-inline-block tw-text-sm tw-font-medium tw-text-[#474C54] tw-rounded-[52px] ll-gray-border">{{ $company->jobs_count }}
+                                                    class="tw-px-3 tw-py-1 tw-inline-block tw-text-sm tw-font-medium tw-text-[#474C54] tw-rounded-[52px] ll-gray-border">{{ $company->availableJobs() }}
                                                     {{ __('open_position') }}</span>
                                             </div>
                                             <div

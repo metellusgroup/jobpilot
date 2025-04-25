@@ -342,9 +342,9 @@
                                                         <span
                                                             class="tw-px-3 tw-py-1 tw-inline-block tw-text-sm tw-font-medium tw-text-[#474C54] tw-rounded-[52px] ll-gray-border">{{ $company?->industry?->name ?? '' }}</span>
 
-                                                        @if ($company->activejobs !== 0)
+                                                        @if ($company->availableJobs() !== 0)
                                                             <span
-                                                                class="tw-px-3 tw-py-1 tw-inline-block tw-text-sm tw-font-medium tw-text-[#474C54] tw-rounded-[52px] ll-gray-border">{{ $company->activejobs }}
+                                                                class="tw-px-3 tw-py-1 tw-inline-block tw-text-sm tw-font-medium tw-text-[#474C54] tw-rounded-[52px] ll-gray-border">{{ $company->availableJobs() }}
                                                                 {{ __('open_job') }}</span>
                                                         @endif
 

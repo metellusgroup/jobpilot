@@ -251,4 +251,9 @@ class Company extends Model implements HasMedia
             return asset('backend/image/default.png');
         }
     }
+
+    public function availableJobs()
+    {
+        return $this->jobs()->where('status', 'active')->where('deadline', '>=', now())->count() ?? 0;
+    }
 }

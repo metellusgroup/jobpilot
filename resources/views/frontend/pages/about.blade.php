@@ -90,7 +90,7 @@
     </div>
     <!-- Brands area  start -->
     <div class="brands-area">
-        <div class="container">
+        {{-- <div class="container">
             <div class="row align-items-center">
                 <div class="col-12">
                     <div class="brand-active">
@@ -139,9 +139,9 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
-        <div class="rt-spacer-75 rt-spacer-md-30"></div>
+        {{-- <div class="rt-spacer-75 rt-spacer-md-30"></div>
         <!-- About feature image area  start -->
         <div class="about-feature-img">
             <div class="container">
@@ -165,7 +165,7 @@
                 </div>
             </div>
         </div>
-        <div class="rt-spacer-100 rt-spacer-md-10"></div>
+        <div class="rt-spacer-100 rt-spacer-md-10"></div> --}}
 
         <!-- Why choose us -->
         <div class="working-process tw-bg-[#F1F2F4]">

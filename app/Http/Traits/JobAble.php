@@ -27,7 +27,7 @@ trait JobAble
 {
     protected function getJobs($request)
     {
-        $filteredJobs = $this->filterJobs($request)->latest();
+        $filteredJobs = $this->filterJobs($request)->latest()->deadlineActive();
         $featured_jobs = $this->filterJobs($request)->latest()->where('featured', 1)->deadlineActive()
             ->take(18)->get();
         $jobs = $filteredJobs->paginate(18)->withQueryString();
