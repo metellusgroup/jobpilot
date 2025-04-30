@@ -35,3 +35,10 @@ package-lock.json
 .idea/
 .phpunit.result.cache
 composer.lock
+storage/framework/sessions/*
+storage/framework/views/*
+storage/framework/cache/*
+storage/framework/cache/data/*
+storage/framework/testing/*
+storage/framework/testing/cache/*
+storage/framework/testing/cache/data/*
