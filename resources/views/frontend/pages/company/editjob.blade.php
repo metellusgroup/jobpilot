@@ -210,7 +210,7 @@
                                             <span class="error invalid-feedback">{{ $message }}</span>
                                         @enderror
                                     </div>
-                                    <div class="col-lg-6 col-md-6 rt-mb-20">
+                                    <div class="col-lg-4 col-md-4 rt-mb-20">
                                         <x-forms.label name="vacancies" :required="true" class="tw-text-sm tw-mb-2" />
                                         <input value="{{ $job->vacancies }}" name="vacancies" type="text"
                                             placeholder="{{ __('vacancies') }}"
@@ -219,7 +219,28 @@
                                             <span class="error invalid-feedback">{{ $message }}</span>
                                         @enderror
                                     </div>
-                                    <div class="col-lg-6 col-md-6 rt-mb-20">
+                                    <div class="col-lg-4 col-md-4 rt-mb-20">
+                                        <x-forms.label name="created_at" :required="true"
+                                            class="tw-text-sm tw-mb-2" />
+                                        <div class="fromGroup">
+                                            <div class="form-control-icon date datepicker">
+                                                <input value="{{ date('d-m-Y', strtotime($job->created_at)) }}"
+                                                    name="created_at"
+                                                    class="form-control !tw-ps-[55px] @error('created_at') is-invalid @enderror"
+                                                    type="text" id="date" placeholder="d/m/y">
+                                                <span class="input-group-addon has-badge">
+                                                    <span @error('deadline') rt-mr-12 @enderror>
+                                                        <x-svg.calendar-icon />
+                                                    </span>
+                                                </span>
+                                                @error('created_at')
+                                                    <span class="error invalid-feedback d-block">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-lg-4 col-md-4 rt-mb-20">
                                         <x-forms.label name="deadline_expired" :required="true"
                                             class="tw-text-sm tw-mb-2" />
                                         <div class="fromGroup">

@@ -108,6 +108,7 @@ class CompanyUpdateService
                 'apply_url' => $request->apply_url ?? null,
                 'description' => $request->description,
                 'is_remote' => $request->is_remote ?? 0,
+                'created_at' => Carbon::parse($request->created_at)->format('Y-m-d'),
             ]);
             $main_job = $job;
         } else {

@@ -4,17 +4,17 @@
             <div class="row">
                 <div class="col-lg-4 col-md-5 col-sm-6 rt-single-widget ">
                     <a href="#" class="footer-logo">
-                        <img src="{{ $setting->light_logo_url }}" alt="logo" loading="lazy">
+                        <img src="{{ $setting->light_logo_url }}" alt="logo" loading="lazy" style="max-width: 180px !important;">
                     </a>
                     <address>
                         <div class="body-font-2 text-gray-500">
-                            @if ($cms_setting?->footer_phone_no)
+                            {{-- @if ($cms_setting?->footer_phone_no)
                                 <div class="body-font-2 text-gray-500">
                                     <span>{{ __('call_now') }}:</span>
                                     <a href="tel:{{ $cms_setting?->footer_phone_no }}" class="text-gray-10">
                                         {{ $cms_setting?->footer_phone_no }}</a>
                                 </div>
-                            @endif
+                            @endif --}}
                             <div class="max-312 body-font-4 mt-2 text-gray-500">
                                 {{ __('footer_description') }}
                             </div>
