@@ -18,7 +18,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 d-md-flex align-items-center justify-content-md-end">
+                    <div class="col-md-4 d-md-flex align-items-center justify-content-md-end" id="buttonsection">
                         <div class="d-flex gap-3 flex-column flex-md-row">
                             <button
                                 class="btn hover:!tw-border-black tw-inline-flex tw-gap-2 tw-py-2.5 tw-px-4 !tw-border-[2px] !tw-border-[#0066CC] tw-items-center tw-text-base tw-text-[#0066CC]"
@@ -49,8 +49,19 @@
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
                                 </svg>
-                                <span>{{ __('download') }}</span>
+                                <span>{{ __('download_cv') }}</span>
                             </button>
+
+                            <button id="downloadDataButton"
+                            class="btn hover:!tw-border-black tw-inline-flex tw-gap-2 tw-py-2.5 tw-px-4 !tw-border-[2px] !tw-border-[#0066CC] tw-items-center tw-text-base tw-text-[#0066CC]"
+                            type="button">
+                            <svg width="28" height="28" viewBox="0 0 25 25" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                            </svg>
+                            <span>{{ __('download_data') }}</span>
+                        </button>
 
 
                             <div class="rt-mb-md-10">
@@ -109,7 +120,7 @@
                                     </ul>
                                 </div>
                                 <div class="devider"></div>
-                                <div class="social-links">
+                                <div class="social-links" id="social_links">
                                     <h2 class="title"> {{ __('follow_me_social_media') }} </h2>
                                     <div class="social-media">
                                         <ul>
@@ -454,3 +465,56 @@
         </div>
     </div>
 </div>
+
+<!-- Add html2pdf.js library and simple download script -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const downloadButton = document.getElementById('downloadDataButton');
+    if (downloadButton) {
+        downloadButton.addEventListener('click', function() {
+            // Get the modal content
+            const originalElement = document.querySelector('#candidate-profile-modal .modal-content');
+            if (!originalElement) {
+                alert('Modal content not found!');
+                return;
+            }
+
+            // Clone the content to avoid modifying the original
+            const element = originalElement.cloneNode(true);
+
+            // Remove the sections from the clone
+            const buttonSection = element.querySelector('#buttonsection');
+            const socialLinks = element.querySelector('#social_links');
+            if (buttonSection) buttonSection.remove();
+            if (socialLinks) socialLinks.remove();
+
+            // Inject CSS to prevent word breaking
+            const style = document.createElement('style');
+            style.innerHTML = `
+                * {
+                    word-break: normal !important;
+                    overflow-wrap: break-word !important;
+                    word-wrap: break-word !important;
+                    hyphens: none !important;
+                    border: none !important;
+                    box-shadow: none !important;
+                }
+                p, div {
+                    page-break-inside: avoid !important;
+                }
+            `;
+            element.prepend(style);
+
+            // Generate PDF from the modified clone
+            html2pdf().from(element).set({
+                margin: 10,
+                filename: 'candidate-profile.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true, backgroundColor: '#fff' },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            }).save();
+        });
+    }
+});
+</script>

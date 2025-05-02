@@ -1550,5 +1550,6 @@
     "nationality": "Nationality",
     "noc_available": "Noc Available",
     "expected_salary": "Expected Salary (QAR)",
-    "created_at": "Created At"
+    "created_at": "Created At",
+    "download_data": "Download Data"
 }
