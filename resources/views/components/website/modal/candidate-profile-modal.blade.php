@@ -497,7 +497,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     overflow-wrap: break-word !important;
                     word-wrap: break-word !important;
                     hyphens: none !important;
-                    border: none !important;
                     box-shadow: none !important;
                 }
                 p, div {
